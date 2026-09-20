@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  convey-backend:
+    build: ./convey-backend
+    container_name: convey-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - FIREBASE_ENABLED=true
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/firebase-key.json
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+    volumes:
+      - ./convey-backend/firebase-key.json:/app/firebase-key.json
+    restart: unless-stopped
+
+  convey-frontend:
+    build: ./convey-app
+    container_name: convey-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - convey-backend
+    restart: unless-stopped

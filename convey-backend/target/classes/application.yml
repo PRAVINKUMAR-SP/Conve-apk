@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb+srv://opffarmy01pt_db_user:agyPLaL13xpyJoK5@cluster0.wxwhug3.mongodb.net/convey?appName=Cluster0}
+      database: convey
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# JWT Configuration
+app:
+  jwt:
+    secret: CHANGE_ME_TO_A_SECURE_256_BIT_SECRET_KEY_FOR_PRODUCTION_USE_ONLY
+    expiration-ms: 2592000000  # 30 days
+
+# CORS
+  cors:
+    allowed-origins: http://localhost:5173,capacitor://localhost,http://localhost
+
+# Firebase (place google-services.json / service-account.json in resources/)
+firebase:
+  enabled: false
+  config-file: classpath:firebase-service-account.json
+
+logging:
+  level:
+    com.convey: DEBUG
+    org.springframework.data.mongodb: INFO
