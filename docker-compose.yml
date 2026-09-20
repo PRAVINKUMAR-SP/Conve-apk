@@ -6,6 +6,9 @@ services:
     container_name: convey-backend
     ports:
       - "8080:8080"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     environment:
       - SPRING_DATA_MONGODB_URI=${MONGODB_URI}
       - JWT_SECRET=${JWT_SECRET}
