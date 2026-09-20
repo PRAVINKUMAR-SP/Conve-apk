@@ -12,7 +12,7 @@ export default function CreateProfile() {
   const [submitting, setSubmitting] = useState(false)
   const [showPhotoMenu, setShowPhotoMenu] = useState(false)
 
-  const { register } = useAuth()
+  const { register, login } = useAuth()
   const navigate = useNavigate()
 
   const handlePhotoSelect = (e) => {
@@ -49,7 +49,17 @@ export default function CreateProfile() {
     if (result.success) {
       navigate('/permissions', { replace: true })
     } else {
-      setError(result.error)
+      if (result.error.toLowerCase().includes('already registered')) {
+        // Fallback to login if account exists
+        const loginResult = await login(normalized)
+        if (loginResult.success) {
+          navigate('/home', { replace: true })
+        } else {
+          setError(loginResult.error)
+        }
+      } else {
+        setError(result.error)
+      }
     }
     setSubmitting(false)
   }
