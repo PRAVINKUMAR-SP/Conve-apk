@@ -1,5 +1,8 @@
 {
   "appId": "com.convey.app",
   "appName": "Convey",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "cleartext": true
+  }
 }
